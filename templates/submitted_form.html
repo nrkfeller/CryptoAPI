@@ -23,7 +23,7 @@
     </style>
  <body>
      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-         <a class="navbar-brand">Cryptic</a>
+         <a class="navbar-brand" href="/">Cryptic</a>
          <div class="collapse navbar-collapse" id="navbarText">
            <ul class="navbar-nav mr-auto">
              <li class="nav-item">
@@ -41,16 +41,42 @@
 
      <div class="jumbotron d-flex align-items-center">
          <div class="container">
-             <h1 class="display-3">{{status}} Results for {{name}}</h1>
+             <h1 class="display-3">{{status}} Results for {{c['name']}}</h1>
              <hr />
-               <div id="main">
+               <h3>Metrics</h3>
                    <table>
-                       <tr><th>Ticker</th>          <td>{{name}}</td></tr>
-                       <tr><th>Days Analyzed</th>   <td>{{day_analyzed}}</td></tr>
-                       <tr><th>Average Volume</th>  <td>{{avg_vol}}</td></tr>
-                       <tr><th>Average Price</th>   <td>{{avg_price}}</td></tr>
+                       <tr><th>Ticker</th>          <td>{{c['name']}}</td></tr>
+                       <tr><th>Days Analyzed</th>   <td>{{c['days_analyzed']}}</td></tr>
+                       <tr><th>Average Volume</th>  <td>{{c['average_volume']}}</td></tr>
+                       <tr><th>Average Price</th>   <td>{{c['average_price']}}</td></tr>
+                       <tr><th>High</th>            <td>{{c["high"]}}</td></tr>
+                       <tr><th>Low</th>             <td>{{c["low"]}}</td></tr>
                    </table>
-               </div>
+               <hr />
+               <h3>Price is Relative to Bitcoin</h3>
+               <img src="/static/{{c['name']}}.png">
+               <br><br>
+               <h3>Predicted price based on LSTM with parameters:</h3><br>
+                   <code>
+                        _________________________________________________________________<br>
+                        Layer (type)                 Output Shape              Param #   <br>
+                        =================================================================<br>
+                        lstm_7 (LSTM)                (None, 8)                 320       <br>
+                        _________________________________________________________________<br>
+                        dense_7 (Dense)              (None, 1)                 9         <br>
+                        =================================================================<br>
+                        Total params: 329                                                <br>
+                        Trainable params: 329                                            <br>
+                        Non-trainable params: 0                                          <br>
+                        _________________________________________________________________<br>
+                   </code>
+                   <img src="/static/model_arch.png">
+                <br><br>
+                <h3>Prices</h3>
+                <table>
+                    <tr><th>Historical Prices</th>          <td>{{c['prices']}}</td></tr>
+                    <tr><th>Predicted Prices</th>   <td>{{c['predicted_prices']}}</td></tr>
+                </table>
          </div>
      </div>
  </body>

@@ -26,10 +26,17 @@ def add_ticker():
 def submitted_new_crypto():
     ticker = request.form['ticker']
 
-    mc.save_new_crypto_to_mongo(ticker)
-    return render_template(
-        'add_ticker.html',
-        name=mc.get_stored_cryptos())
+    try:
+        mc.save_new_crypto_to_mongo(ticker)
+        return render_template(
+            'add_ticker.html',
+            status="Analyzed Cryptos:",
+            name=mc.get_stored_cryptos())
+    except:
+        return render_template(
+            'add_ticker.html',
+            status="Count Not Find {}".format(ticker),
+            name=mc.get_stored_cryptos())
 
 
 @app.route('/search')
@@ -51,10 +58,12 @@ def submitted_form():
     return render_template(
         'submitted_form.html',
         status="Found",
-        name=searched_crypto['name'],
-        avg_vol=searched_crypto['average_volume'],
-        day_analyzed=searched_crypto['days_analyzed'],
-        avg_price=searched_crypto['average_price'])
+        c=searched_crypto)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @app.errorhandler(500)

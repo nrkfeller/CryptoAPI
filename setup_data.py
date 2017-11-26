@@ -1,5 +1,7 @@
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 
 from load import init
 
@@ -45,11 +47,23 @@ def get_predictions(ds, tiker):
     trainPredict = scaler.inverse_transform(trainPredict)
     testPredict = scaler.inverse_transform(testPredict)
 
-    # trainPredictPlot = np.empty_like(ds)
-    # trainPredictPlot[:, :] = np.nan
-    # trainPredictPlot[look_back:len(trainPredict) + look_back, :] = trainPredict
-    # # shift test predictions for plotting
-    # testPredictPlot = np.empty_like(ds)
-    # testPredictPlot[:, :] = np.nan
-    # testPredictPlot[len(trainPredict) + 1:len(ds) - 1, :] = testPredict
+    trainPredictPlot = np.empty_like(ds)
+    trainPredictPlot[:, :] = np.nan
+    trainPredictPlot[look_back:len(trainPredict) + look_back, :] = trainPredict
+    # shift test predictions for plotting
+    testPredictPlot = np.empty_like(ds)
+    testPredictPlot[:, :] = np.nan
+    testPredictPlot[len(trainPredict) + 1:len(ds) - 1, :] = testPredict
+
+    plt.plot(trainPredictPlot)
+    plt.plot(testPredictPlot)
+    plt.title("{} Price and Prediction".format(tiker))
+    plt.xlabel("Price")
+    plt.ylabel("Time")
+    b = mpatches.Patch(color='b', label='Historical Price')
+    g = mpatches.Patch(color='g', label='Predicted Price')
+    plt.legend(handles=[b, g])
+    plt.savefig('static/{}.png'.format(tiker))
+    plt.clf()
+
     return list(trainPredict.flatten()), list(testPredict.flatten())

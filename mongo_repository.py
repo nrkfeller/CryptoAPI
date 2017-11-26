@@ -31,15 +31,11 @@ class MongoCrypto(object):
         cryptos = self.mongo.db.cryptos
 
         if cryptos.find({'name': ticker}).count() > 0:
-            return
+            cryptos.delete_one({'name': ticker})
 
         data = self.get_crypto_data(ticker)
         describe = data.describe()
         data = data.dropna(how='all')
-
-        days = describe['close'][0]
-        mean_price = describe['close'][1]
-        mean_volume = describe['volume'][1]
 
         prices = data['close']
         train, test = get_predictions(prices, ticker)
@@ -47,12 +43,20 @@ class MongoCrypto(object):
         train = [float(i) for i in train]
         test = [float(i) for i in test]
 
+        days = describe['close'][0]
+        mean_price = describe['close'][1]
+        mean_volume = describe['volume'][1]
+        high = max(train)
+        low = min(train)
+
         cryptos.insert({'name': ticker,
                         'prices': train,
                         'predicted_prices': test,
                         'days_analyzed': days,
                         'average_price': mean_price,
-                        'average_volume': mean_volume
+                        'average_volume': mean_volume,
+                        'high': high,
+                        'low': low
                         })
 
     def get_crypto_data(self, poloniex_pair):
