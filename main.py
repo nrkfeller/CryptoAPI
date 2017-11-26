@@ -39,13 +39,11 @@ def form():
 
 @app.route('/submitted', methods=['POST'])
 def submitted_form():
-    name = request.form['name']
-    email = request.form['ticker']
 
     return render_template(
         'submitted_form.html',
-        name=name,
-        email=email)
+        name='name',
+        email='email')
 
 
 @app.errorhandler(500)

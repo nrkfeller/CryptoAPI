@@ -1,26 +1,38 @@
 <html>
   <head>
     <title>Submit a form</title>
-   <link rel="stylesheet" type="text/css" href="/static/style.css">
-  </head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+   </head>
   <body>
-    <div id="container">
-      <div class="pagetitle">
-        <h1>Submit a form</h1>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand">Cryptic</a>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/add_ticker">Search</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/form">Train</a>
+              </li>
+            </ul>
+            <span class="navbar-text">
+              Nick and Adrianos
+            </span>
+          </div>
+      </nav>
+      <div class="jumbotron d-flex align-items-center">
+          <div class="container">
+              <h1 class="display-3">Search Cryptocurrencies</h1>
+              <hr />
+                <div id="main">
+                    <form method="post" action="{{ url_for('submitted_form') }}">
+                      <label for="name" class="lead">Submit Crypto For Analysis:</label>
+                      <input class="form-control form-control-lg " type="text" name="name" placeholder="ETH, LTC, DASH..."><br />
+                      <button type="button submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+          </div>
       </div>
-      <div id="main">
-        <form method="post" action="{{ url_for('submitted_form') }}">
-          <label for="name">Crypto Name:</label>
-          <input type="text" name="name"><br />
-
-          <label for="ticker">Ticker:</label>
-          <input type="text" name="ticker"><br />
-
-          <!-- <label for="comments">Comments:</label>
-          <textarea name="comments"></textarea><br /> -->
-          <input type="submit">
-        </form>
-      </div>
-    </div>
   </body>
 </html>
