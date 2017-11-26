@@ -14,7 +14,7 @@ mongo = PyMongo(app)
 mc = MongoCrypto(mongo)
 
 
-@app.route('/add_ticker', methods=['GET'])
+@app.route('/train', methods=['GET'])
 def add_ticker():
     cryptos = mc.get_stored_cryptos()
     return render_template(
@@ -22,7 +22,7 @@ def add_ticker():
         name=cryptos)
 
 
-@app.route('/add_ticker', methods=['POST'])
+@app.route('/train', methods=['POST'])
 def submitted_new_crypto():
     ticker = request.form['ticker']
 
@@ -32,7 +32,7 @@ def submitted_new_crypto():
         name=mc.get_stored_cryptos())
 
 
-@app.route('/form')
+@app.route('/search')
 def form():
     return render_template('form.html')
 
@@ -40,10 +40,21 @@ def form():
 @app.route('/submitted', methods=['POST'])
 def submitted_form():
 
+    searched_crypto = mc.search(request.form['ticker'])
+
+    if not searched_crypto:
+        return render_template(
+            'submitted_form.html',
+            status="Did Not Find",
+            name=request.form['ticker'])
+
     return render_template(
         'submitted_form.html',
-        name='name',
-        email='email')
+        status="Found",
+        name=searched_crypto['name'],
+        avg_vol=searched_crypto['average_volume'],
+        day_analyzed=searched_crypto['days_analyzed'],
+        avg_price=searched_crypto['average_price'])
 
 
 @app.errorhandler(500)

@@ -19,6 +19,13 @@ class MongoCrypto(object):
         self.mongo = mongo
         self.cryptos = []
 
+    def search(self, ticker):
+        cryptos = self.mongo.db.cryptos
+
+        found = cryptos.find_one({"name": ticker})
+
+        return found
+
     def save_new_crypto_to_mongo(self, ticker):
 
         cryptos = self.mongo.db.cryptos
@@ -40,8 +47,13 @@ class MongoCrypto(object):
         train = [float(i) for i in train]
         test = [float(i) for i in test]
 
-        cryptos.insert({'name': ticker, 'prices': train, 'predicted_prices': test,
-                        'days_analyzes': days, 'average_price': mean_price, 'average_volume': mean_volume})
+        cryptos.insert({'name': ticker,
+                        'prices': train,
+                        'predicted_prices': test,
+                        'days_analyzed': days,
+                        'average_price': mean_price,
+                        'average_volume': mean_volume
+                        })
 
     def get_crypto_data(self, poloniex_pair):
         poloniex_pair = "BTC_{}".format(poloniex_pair)
