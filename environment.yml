@@ -1,0 +1,12 @@
+name: crypto
+channels:
+- !!python/unicode
+  'defaults'
+dependencies:
+- python=3.5
+- pip==9.0.1
+- numpy==1.12.0
+- pandas==0.19.2
+- pip:
+  - Flask==0.12.2
+  - Flask-PyMongo
