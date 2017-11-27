@@ -1,9 +1,9 @@
 Flask==0.12.2
-Flask-PyMongo
-pandas
-numpy
-keras
-sklearn
-tensorflow
-h5py
+Flask-PyMongo==0.5.1
+h5py==2.7.1
+keras==2.1.1
 matplotlib==1.4.3
+numpy==1.13.1
+pandas==0.19.2
+scikit-learn==0.19.1
+tensorflow==1.4.0
