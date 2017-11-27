@@ -26,17 +26,17 @@ def add_ticker():
 def submitted_new_crypto():
     ticker = request.form['ticker']
 
-    try:
-        mc.save_new_crypto_to_mongo(ticker)
-        return render_template(
-            'add_ticker.html',
-            status="Analyzed Cryptos:",
-            name=mc.get_stored_cryptos())
-    except:
-        return render_template(
-            'add_ticker.html',
-            status="Count Not Find {}".format(ticker),
-            name=mc.get_stored_cryptos())
+    #try:
+    mc.save_new_crypto_to_mongo(ticker)
+    return render_template(
+        'add_ticker.html',
+        status="Analyzed Cryptos:",
+        name=mc.get_stored_cryptos())
+    #except:
+    #    return render_template(
+    #        'add_ticker.html',
+    #        status="Count Not Find {}".format(ticker),
+    #        name=mc.get_stored_cryptos())
 
 
 @app.route('/search')
@@ -74,4 +74,4 @@ def server_error(e):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port="80")

@@ -1,5 +1,8 @@
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
