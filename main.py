@@ -48,17 +48,17 @@ def form():
 def submitted_form():
 
     searched_crypto = mc.search(request.form['ticker'])
-
-    if not searched_crypto:
+    
+    try:
         return render_template(
             'submitted_form.html',
-            status="Did Not Find",
-            name=request.form['ticker'])
-
-    return render_template(
-        'submitted_form.html',
-        status="Found",
-        c=searched_crypto)
+            status="Found",
+            c=searched_crypto)
+    except:
+        return render_template(
+                'submitted_form.html',
+                status="Did Not Find",
+                name=request.form['ticker'])
 
 
 @app.route('/')

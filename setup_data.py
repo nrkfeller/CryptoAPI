@@ -58,8 +58,8 @@ def get_predictions(ds, tiker):
     testPredictPlot[:, :] = np.nan
     testPredictPlot[len(trainPredict) + 1:len(ds) - 1, :] = testPredict
 
-    plt.plot(trainPredictPlot)
-    plt.plot(testPredictPlot)
+    plt.plot(trainPredictPlot, c='b')
+    plt.plot(testPredictPlot, c='g')
     plt.title("{} Price and Prediction".format(tiker))
     plt.xlabel("Price")
     plt.ylabel("Time")
